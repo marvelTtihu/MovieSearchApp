@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-// import SearchPNG from '../assets/Search.png'
 
 const Navbar = ({searchTerm, setSearchTerm}) => {
 
@@ -15,7 +14,6 @@ const Navbar = ({searchTerm, setSearchTerm}) => {
                 placeholder="Search for movies"
                 className="border-2 border-gray-200 px-4 rounded-4xl py-2"
                 />
-                {/* <img src={SearchPNG} height={32} width={32}/> */}
             </nav>
         </header>
     );
