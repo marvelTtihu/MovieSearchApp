@@ -11,6 +11,13 @@ const Home = () => {
 
 
     useEffect(() => {
+        if(searchTerm.trim()){
+            setMovies([])
+            setError("")
+        }
+
+        setLoading(true)
+        setError("")
     const timeoutId = setTimeout(() => {
             const fetchMovie = async () => {
                 try{
