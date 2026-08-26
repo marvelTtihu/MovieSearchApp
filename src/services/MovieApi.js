@@ -9,7 +9,7 @@ export async function searchMovie(title) {
     const data = await response.json();
 
     if(data.Response === "False"){
-        throw new Error(data.Error);
+        return;
     }
     return data.Search;
 }
