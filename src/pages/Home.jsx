@@ -5,60 +5,64 @@ import MovieGrid from "../components/MovieGrid.jsx"
 
 const Home = () => {
     const[movies, setMovies] = useState([]);
-    const[loading, setLoading] = useState(true);
+    const[loading, setLoading] = useState(false);
     const[error, setError] = useState("");
     const[searchTerm, setSearchTerm] = useState("");
 
 
     useEffect(() => {
-        if(searchTerm.trim()){
-            setMovies([])
-            setError("")
+        if(!searchTerm.trim()){
+            setMovies([]);
+            setLoading(false);
+            setError("");
+            return;
         }
 
-        setLoading(true)
-        setError("")
-    const timeoutId = setTimeout(() => {
-            const fetchMovie = async () => {
-                try{
-                    const data = await searchMovie(searchTerm)
-                    setMovies(data)
-                } catch(err) {
-                    setError(err.message)
-                } finally {
-                    setLoading(false);
-                }
-            }
+        const timeoutId = setTimeout(() => {
+                const fetchMovie = async () => {
+                    setLoading(true)
+                    setError("")
 
-            fetchMovie();
-        }, 500);
-        return () => clearTimeout(timeoutId);
-    }, [searchTerm])
+                    try{
+                        const data = await searchMovie(searchTerm);
+                        setMovies(data);
+                    } catch(err) {
+                        setError(err.message);
+                        setMovies([]);
+                    } finally {
+                        setLoading(false);
+                    }
+                }
+
+                fetchMovie();
+            }, 500);
+
+            return () => clearTimeout(timeoutId);
+        }, [searchTerm])
 
     return(
         <>
             <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
-            <main>
-                <p>Look up a fresh Movies</p>
+            <section className="text-white">
                 <section>
-                    {loading && <p>Loading...</p>}
-                    {error && <p>Error: {error}</p>}
+                    {loading && <p className="flex justify-center items-center py-28">Loading...</p>}
+                    {error && <div className="max-w-max mx-auto py-28"><p className="flex justify-center items-center bg-red-400 p-4 rounded-xl">Error: {error} </p></div>}
                     
                     {!loading && !error && (
-                        <section>
+                        <section className="py-28 px-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
                             {movies?.length > 0 ? (
                                     movies.map((movie) => (
                                         <MovieGrid key={movie.imdbID} movie={movie}/>
                                 ))
                             ): (
-                                <div>
-                                    <h2>No movies found.</h2>
+                                <div className="col-span-full flex justify-center py-28">
+                                    <h2 className="text-8xl">Find your movies!</h2>
                                 </div>
                             )}
                         </section>
                     )}
                 </section>
-            </main>    
+            </section>    
         </>
     );
 }
