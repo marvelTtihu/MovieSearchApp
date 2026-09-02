@@ -7,16 +7,11 @@ const Home = () => {
     const[movies, setMovies] = useState([]);
     const[loading, setLoading] = useState(false);
     const[error, setError] = useState("");
-    const[searchTerm, setSearchTerm] = useState("");
+    const[query, setQuery] = useState("Avengers");
 
 
     useEffect(() => {
-        if(!searchTerm.trim()){
-            setMovies([]);
-            setLoading(false);
-            setError("");
-            return;
-        }
+        if(!query.trim()) return;
 
         const timeoutId = setTimeout(() => {
                 const fetchMovie = async () => {
@@ -24,7 +19,7 @@ const Home = () => {
                     setError("")
 
                     try{
-                        const data = await searchMovie(searchTerm);
+                        const data = await searchMovie(query);
                         setMovies(data);
                     } catch(err) {
                         setError(err.message);
@@ -38,11 +33,11 @@ const Home = () => {
             }, 500);
 
             return () => clearTimeout(timeoutId);
-        }, [searchTerm])
+        }, [query])
 
     return(
         <>
-            <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
+            <Navbar query={query} setQuery={setQuery}/>
             <section className="text-white">
                 <section>
                     {loading && <p className="flex justify-center items-center py-28">Loading...</p>}
