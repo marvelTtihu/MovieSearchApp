@@ -36,7 +36,7 @@ const Home = () => {
         }, [query])
 
     return(
-        <>
+        <section>
             <Navbar query={query} setQuery={setQuery}/>
             <section className="text-white">
                 <section>
@@ -44,21 +44,21 @@ const Home = () => {
                     {error && <div className="max-w-max mx-auto py-28"><p className="flex justify-center items-center bg-red-400 p-4 rounded-xl">Error: {error} </p></div>}
                     
                     {!loading && !error && (
-                        <section className="py-28 px-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+                        <article className="py-28 px-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
                             {movies?.length > 0 ? (
                                     movies.map((movie) => (
                                         <MovieGrid key={movie.imdbID} movie={movie}/>
                                 ))
                             ): (
-                                <div className="col-span-full flex justify-center py-28">
+                                <article className="col-span-full flex justify-center py-28">
                                     <h2 className="text-8xl">Find your movies!</h2>
-                                </div>
+                                </article>
                             )}
-                        </section>
+                        </article>
                     )}
                 </section>
             </section>    
-        </>
+        </section>
     );
 }
 
