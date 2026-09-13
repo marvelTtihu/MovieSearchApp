@@ -1,31 +1,27 @@
+import { Link } from "react-router-dom";
+import placeholderImg from "../assets/placeholderImg.png"
+
 const MovieCard = ({ movie }) => {
+    
+    const moviePoster = movie.Poster !== "N/A"
+        ? movie.Poster
+        : placeholderImg
+
     return(
-        <article className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-            <div className="overflow-hidden rounded-3xl bg-neutral-800 shadow-2xl">
-                <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-8 p-6 md:p-10">
-                    <figure className="flex justify-center md:justify-start">
-                        <img src={movie.Poster} alt={movie.Title}/>
-                    </figure>
-                    <article>
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">{movie.Title}</h2>
-                        <p className="text-lg md:text-xl mb-4">{movie.Plot}</p>
-                            <p className="bg-neutral-900 max-w-max text-sm px-4 mb-4 py-1">{movie.Year} • {movie.Runtime} • {movie.Rated}</p>
-                        <div className="mb-6 flex flex-wrap items-center gap-3">
-                            <span className="bg-yellow-500 px-3 py-1">
-                                ⭐ {movie.imdbRating}
-                            </span>
-                            <span className="text-sm text-neutral-400">
-                                IMDB Rating
-                            </span>
-                        </div>
-                        <div className="mt-34">
-                            <button className="bg-red-400 py-2 px-4 rounded-xl ">Watch Now</button>
-                        </div>
-                    </article>
-                </div>
-            </div>
+        <article>
+            <Link to={`/movie/${movie.imdbID}`}> 
+                <figure className="my-3">
+                    <img src={moviePoster} alt={movie.Title} className="w-full h-[380px] object-cover transition-all duration-300 ease-in-out hover:scale-105"/>
+                </figure>
+            </Link>
+                <p>{movie.Title}</p>
+                <article className="flex gap-2 text-gray-100">
+                    <p className="capitalize">{movie.Type}</p>
+                    <span>•</span>
+                    <p>{movie.Year}</p>
+                </article>
         </article>
-    )
+    );
 }
 
-export default MovieCard
+export default MovieCard;
